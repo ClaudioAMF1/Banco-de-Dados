@@ -1,0 +1,117 @@
+erDiagram
+    ALUNO {
+        int id_aluno PK
+        string nome
+        string cpf
+        date data_nascimento
+        string telefone
+        string email
+        string endereco
+        string status
+    }
+    PLANO {
+        int id_plano PK
+        string nome
+        decimal valor
+        int duracao_meses
+        string descricao
+        string status
+    }
+    MATRICULA {
+        int id_matricula PK
+        date data_inicio
+        date data_fim
+        string status
+        decimal valor_pago
+    }
+    FUNCIONARIO {
+        int id_funcionario PK
+        string nome
+        string cpf
+        string cargo
+        string registro_profissional
+        string telefone
+        string email
+        decimal salario_base
+        string status
+    }
+    AVALIACAO_FISICA {
+        int id_avaliacao PK
+        date data_avaliacao
+        decimal peso
+        decimal altura
+        decimal imc
+        decimal percentual_gordura
+        text observacoes
+    }
+    TREINO {
+        int id_treino PK
+        date data_criacao
+        date data_validade
+        string tipo
+        text objetivo
+        string status
+    }
+    EXERCICIO {
+        int id_exercicio PK
+        string nome
+        string grupo_muscular
+        text descricao
+        string nivel
+    }
+    FICHA_TREINO {
+        int id_ficha PK
+        int series
+        int repeticoes
+        decimal carga
+        string observacao
+    }
+    PRESENCA {
+        int id_presenca PK
+        date data
+        time hora_entrada
+        time hora_saida
+    }
+    PAGAMENTO {
+        int id_pagamento PK
+        date data_pagamento
+        decimal valor
+        string metodo
+        string status
+    }
+    PRODUTO {
+        int id_produto PK
+        string nome
+        string categoria
+        decimal preco_venda
+        int estoque
+        string status
+    }
+    VENDA {
+        int id_venda PK
+        date data_venda
+        decimal valor_total
+        string metodo_pagamento
+        string status
+    }
+    ITEM_VENDA {
+        int id_item PK
+        int quantidade
+        decimal valor_unitario
+        decimal subtotal
+    }
+
+    ALUNO ||--o{ MATRICULA : possui
+    PLANO ||--o{ MATRICULA : vinculado
+    ALUNO ||--o{ AVALIACAO_FISICA : realiza
+    FUNCIONARIO ||--o{ AVALIACAO_FISICA : executa
+    ALUNO ||--o{ TREINO : recebe
+    FUNCIONARIO ||--o{ TREINO : elabora
+    TREINO ||--o{ FICHA_TREINO : contem
+    EXERCICIO ||--o{ FICHA_TREINO : compoe
+    ALUNO ||--o{ PRESENCA : registra
+    MATRICULA ||--o{ PAGAMENTO : gera
+    PRODUTO ||--o{ ITEM_VENDA : possui
+    VENDA ||--o{ ITEM_VENDA : contem
+    ALUNO ||--o{ VENDA : realiza
+    FUNCIONARIO ||--o{ VENDA : registra
