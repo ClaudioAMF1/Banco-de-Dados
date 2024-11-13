@@ -404,6 +404,21 @@ LEFT JOIN ALUNO_TURMA at ON t.codTurma = at.codTurma
 WHERE t.status = 'A'
 GROUP BY p.CPF, m.codModalidade;
 
+-- Análise de Renovações de Matrícula
+SELECT 
+    a.nome AS aluno,
+    p.nome AS plano,
+    COUNT(*) AS total_renovacoes,
+    MAX(m.dataInicio) AS ultima_matricula
+FROM ALUNO a
+INNER JOIN MATRICULA m ON a.CPF = m.CPF_aluno
+INNER JOIN PLANO p ON m.codPlano = p.codPlano
+GROUP BY a.CPF, p.codPlano
+HAVING COUNT(*) > 1
+ORDER BY total_renovacoes DESC;
+
+/* 6. CONSULTAS ANALÍTICAS */
+
 -- Análise de Ocupação da Academia por Horário
 SELECT 
     t.diaSemana,
