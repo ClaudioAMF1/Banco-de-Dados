@@ -155,5 +155,33 @@ HAVING COUNT(*) > 1;
 ```
 *Histórico de renovações de matrícula*
 
+## 6. CONSULTAS ANALÍTICAS
+
+### Análise de Ocupação por Horário
+```sql
+SELECT 
+    t.diaSemana, 
+    t.horario, 
+    COUNT(DISTINCT t.codTurma) as total_turmas, 
+    SUM(t.capacidade) as capacidade_total, 
+    COUNT(DISTINCT at.CPF_aluno) as total_alunos, 
+    ROUND((COUNT(DISTINCT at.CPF_aluno) / SUM(t.capacidade)) * 100, 2) as taxa_ocupacao 
+FROM TURMA t 
+LEFT JOIN ALUNO_TURMA at ON t.codTurma = at.codTurma 
+WHERE t.status = 'A' 
+GROUP BY t.diaSemana, t.horario 
+ORDER BY 
+    CASE 
+        WHEN t.diaSemana = 'Segunda' THEN 1 
+        WHEN t.diaSemana = 'Terça' THEN 2 
+        WHEN t.diaSemana = 'Quarta' THEN 3 
+        WHEN t.diaSemana = 'Quinta' THEN 4 
+        WHEN t.diaSemana = 'Sexta' THEN 5 
+        WHEN t.diaSemana = 'Sábado' THEN 6 
+        ELSE 7 
+    END, 
+    t.horario;
+```
+*Analisa a taxa de ocupação da academia por dia da semana e horário, mostrando o total de turmas, capacidade e alunos matriculados*
+
 ---
-*Todas as consultas podem ser adaptadas conforme necessidade específica do negócio.*
