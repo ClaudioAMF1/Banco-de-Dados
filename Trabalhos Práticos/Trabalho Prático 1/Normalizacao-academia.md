@@ -82,4 +82,4 @@ Plano (codPlano, nome, valor)
 - A estrutura resultante evita anomalias de inserção, atualização e exclusão
 
 ---
-*Observação: Este processo de normalização considerou as regras de negócio específicas de uma academia.*
+
